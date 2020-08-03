@@ -1,0 +1,121 @@
+<div class="card"
+     *ngIf="user">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="card-body">
+    <form novalidate
+          (ngSubmit)="saveUser(user)"
+          [formGroup]="userForm">
+      <fieldset>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label"
+                 for="userNameId">User Name</label>
+
+          <div class="col-md-9">
+            <input [ngClass]="{'is-invalid': displayMessage.userName }"
+                   class="form-control"
+                   id="userNameId"
+                   type="text"
+                   placeholder="Name (required)"
+                   formControlName="userName"
+                   (blur)="blur()" />
+            <span class="invalid-feedback"
+                  *ngIf="displayMessage.userName">
+              {{displayMessage.userName}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label"
+                 for="positionId">Position</label>
+
+          <div class="col-md-9">
+            <input [ngClass]="{'is-invalid': displayMessage.position}"
+                   class="form-control"
+                   id="positionId"
+                   type="text"
+                   placeholder="Position (required)"
+                   formControlName="position"
+                   (blur)="blur()" />
+            <span class="invalid-feedback"
+                  *ngIf="displayMessage.position">
+              {{displayMessage.position}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label"
+                 for="ratingId">Rating (1-5)</label>
+
+          <div class="col-md-9">
+            <input [ngClass]="{'is-invalid': displayMessage.rating}"
+                   class="form-control"
+                   id="ratingId"
+                   type="text"
+                   placeholder="Rating"
+                   formControlName="rating" />
+            <span class="invalid-feedback"
+                  *ngIf="displayMessage.rating">
+              {{displayMessage.starRating}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label"
+                 for="descriptionId">Description</label>
+
+          <div class="col-md-9">
+            <textarea [ngClass]="{'is-invalid': displayMessage.description}"
+                      class="form-control"
+                      id="descriptionId"
+                      placeholder="Description"
+                      rows=3
+                      formControlName="description">
+            </textarea>
+            <span class="invalid-feedback"
+                  *ngIf="displayMessage.description">
+              {{ displayMessage.description}}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-10 col-md-offset-2">
+            <span>
+              <button class="btn btn-primary"
+                      type="submit"
+                      style="width:80px;margin-right:10px"
+                      [disabled]="!userForm.valid || !userForm.dirty">
+                Save
+              </button>
+            </span>
+            <span>
+              <button class="btn btn-light"
+                      type="button"
+                      style="width:80px;margin-right:10px"
+                      (click)="cancelEdit(user)">
+                Cancel
+              </button>
+            </span>
+            <span>
+              <button class="btn btn-light"
+                      type="button"
+                      style="width:80px"
+                      (click)="deleteUser(user)">
+                Delete
+              </button>
+            </span>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+<div *ngIf="errorMessage"
+     class="alert alert-danger">
+  Error: {{ errorMessage }}
+</div>
