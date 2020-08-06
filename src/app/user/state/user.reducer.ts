@@ -2,7 +2,7 @@ import { createReducer, on, createAction} from '@ngrx/store'
 import { JsonPipe } from '@angular/common';
 
 export const loginReducer = createReducer(
-    { maskUserName: true},
+    { maskUserName: false},
     on(createAction('[User] Mask User Name'), state => {                
         return {
             ...state,
