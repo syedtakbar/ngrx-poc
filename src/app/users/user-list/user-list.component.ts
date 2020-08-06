@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { User } from '../user';
@@ -22,7 +22,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   selectedUser: User | null;
   sub: Subscription;
 
-  constructor(private userService: UserService) { }
+  constructor(private store: Store<any>, private userService: UserService) { }
 
   ngOnInit(): void {
     this.sub = this.userService.selectedUserChanges$.subscribe(
@@ -33,6 +33,14 @@ export class UserListComponent implements OnInit, OnDestroy {
       next: (users: User[]) => this.users = users,
       error: err => this.errorMessage = err
     });
+
+    this.store.select('users').subscribe(
+      users => {
+        if (users) {
+          this.displayCode = users.showUserPosition;
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -41,6 +49,9 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   checkChanged(): void {
     this.displayCode = !this.displayCode;
+    this.store.dispatch( {
+      type: '[Users] Toggle User Position'
+    });
   }
 
   newUser(): void {

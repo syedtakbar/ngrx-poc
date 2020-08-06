@@ -7,6 +7,9 @@ import { UserShellComponent } from './user-shell/user-shell.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './state/users.reducer';
+
 const userRoutes: Routes = [
   { path: '', component: UserShellComponent }
 ];
@@ -14,7 +17,8 @@ const userRoutes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild(userRoutes)
+    RouterModule.forChild(userRoutes),
+    StoreModule.forFeature('users', userReducer)
   ],
   declarations: [
     UserShellComponent,
